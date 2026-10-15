@@ -1,0 +1,33 @@
+{
+  "name": "lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exp0": "tsx src/exp0-happy.ts",
+    "exp1": "tsx src/exp1-revoked.ts",
+    "exp2": "tsx src/exp2-retry.ts",
+    "exp3": "tsx src/exp3-agent-wallet.ts",
+    "all": "npm run -s exp0 > ../results/exp0.log 2>&1 && npm run -s exp1 > ../results/exp1.log 2>&1 && npm run -s exp2 > ../results/exp2.log 2>&1 && npm run -s exp3 > ../results/exp3.log 2>&1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@x402/core": "2.28.0",
+    "@x402/evm": "2.28.0",
+    "@x402/express": "2.28.0",
+    "@x402/extensions": "2.28.0",
+    "@x402/fetch": "2.28.0",
+    "express": "5.3.0",
+    "viem": "2.57.7"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.6.5",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}

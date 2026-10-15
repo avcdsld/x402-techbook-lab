@@ -1,0 +1,382 @@
+
+=== A
+  [  867ms] server      ← GET /report { rid: 'ce70dddf', purchaseId: undefined, paid: false }
+  [  872ms] server      → HTTP 402 { rid: 'ce70dddf', paymentResponse: false }
+  [  882ms] client      署名を作成 {
+  sig: '246969626e3a',
+  nonce: '0x7323ae65…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [  885ms] server      ← GET /report { rid: '0ece4e88', purchaseId: undefined, paid: true }
+  [  906ms] facilitator verify { sig: '246969626e3a', isValid: true, reason: undefined }
+  [  906ms] server      handler 実行（=サービス提供） { n: 1 }
+  [  926ms] facilitator settle tx を送信 { tx: '0xa5e17901…' }
+  [ 1038ms] facilitator settle {
+  sig: '246969626e3a',
+  success: true,
+  tx: '0xa5e17901…',
+  reason: undefined,
+  message: undefined
+}
+  [ 1039ms] server      !! 決済後の応答を破棄（socket destroy） { rid: '0ece4e88' }
+  [ 1042ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 1043ms] server      ← GET /report { rid: '47e04dba', purchaseId: undefined, paid: false }
+  [ 1044ms] server      → HTTP 402 { rid: '47e04dba', paymentResponse: false }
+  [ 1046ms] client      署名を作成 {
+  sig: 'cfdf1028c750',
+  nonce: '0x60073175…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 1048ms] server      ← GET /report { rid: '0c3e650b', purchaseId: undefined, paid: true }
+  [ 1057ms] facilitator verify { sig: 'cfdf1028c750', isValid: true, reason: undefined }
+  [ 1058ms] server      handler 実行（=サービス提供） { n: 2 }
+  [ 1077ms] facilitator settle tx を送信 { tx: '0xe1a396af…' }
+  [ 1135ms] facilitator settle {
+  sig: 'cfdf1028c750',
+  success: true,
+  tx: '0xe1a396af…',
+  reason: undefined,
+  message: undefined
+}
+  [ 1135ms] server      → HTTP 200 { rid: '0c3e650b', paymentResponse: true }
+  [ 1137ms] client      再試行: HTTP 200 { body: '{"report":"report #2","q":null}' }
+
+=== B
+  [ 1841ms] server      ← GET /report { rid: '9538cca4', purchaseId: undefined, paid: false }
+  [ 1842ms] server      → HTTP 402 { rid: '9538cca4', paymentResponse: false }
+  [ 1845ms] client      署名を作成 {
+  sig: '41df2e0533eb',
+  nonce: '0x88d2a193…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 1847ms] server      ← GET /report { rid: 'fedada9f', purchaseId: undefined, paid: true }
+  [ 1858ms] facilitator verify { sig: '41df2e0533eb', isValid: true, reason: undefined }
+  [ 1858ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 1872ms] facilitator settle tx を送信 { tx: '0x3b38f969…' }
+  [ 1929ms] facilitator settle {
+  sig: '41df2e0533eb',
+  success: true,
+  tx: '0x3b38f969…',
+  reason: undefined,
+  message: undefined
+}
+  [ 1929ms] server      !! 決済後の応答を破棄（socket destroy） { rid: 'fedada9f' }
+  [ 1930ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 1931ms] server      ← GET /report { rid: '42743bcb', purchaseId: undefined, paid: true }
+  [ 1945ms] facilitator verify {
+  sig: '41df2e0533eb',
+  isValid: false,
+  reason: 'invalid_exact_evm_transaction_simulation_failed'
+}
+  [ 1945ms] server      → HTTP 402 { rid: '42743bcb', paymentResponse: false }
+  [ 1946ms] client      再試行: HTTP 402 { body: '{}' }
+
+=== C
+  [ 2698ms] server      ← GET /report { rid: '9f587f23', purchaseId: undefined, paid: false }
+  [ 2699ms] server      → HTTP 402 { rid: '9f587f23', paymentResponse: false }
+  [ 2703ms] client      署名を作成 {
+  sig: '2446a5153263',
+  nonce: '0x038b2fa9…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 2705ms] server      ← GET /report { rid: '0a320eca', purchaseId: undefined, paid: true }
+  [ 2719ms] facilitator verify { sig: '2446a5153263', isValid: true, reason: undefined }
+  [ 2720ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 2737ms] facilitator settle tx を送信 { tx: '0xa65c01b6…' }
+  [ 2794ms] facilitator settle {
+  sig: '2446a5153263',
+  success: true,
+  tx: '0xa65c01b6…',
+  reason: undefined,
+  message: undefined
+}
+  [ 2795ms] server      !! 決済後の応答を破棄（socket destroy） { rid: '0a320eca' }
+  [ 2796ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 2797ms] server      ← GET /report { rid: 'e1aa82f5', purchaseId: undefined, paid: true }
+  [ 2797ms] server      購入済み：支払いを処理せず同じ結果を返す { key: 'pay_9cfeee91d08b43869bf3' }
+  [ 2798ms] server      → HTTP 200 { rid: 'e1aa82f5', paymentResponse: false }
+  [ 2799ms] client      再試行: HTTP 200 { body: '{"report":"report #1","q":null}' }
+
+=== D
+  [ 3542ms] server      ← GET /report { rid: 'a7b52f61', purchaseId: undefined, paid: false }
+  [ 3543ms] server      → HTTP 402 { rid: 'a7b52f61', paymentResponse: false }
+  [ 3545ms] client      署名を作成 {
+  sig: 'c032bf7e89ed',
+  nonce: '0x96f0c34a…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 3547ms] server      ← GET /report { rid: '5ba858ff', purchaseId: undefined, paid: true }
+  [ 3563ms] facilitator verify { sig: 'c032bf7e89ed', isValid: true, reason: undefined }
+  [ 3563ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 3574ms] facilitator settle tx を送信 { tx: '0x4de63c13…' }
+  [ 3630ms] facilitator settle {
+  sig: 'c032bf7e89ed',
+  success: true,
+  tx: '0x4de63c13…',
+  reason: undefined,
+  message: undefined
+}
+  [ 3630ms] server      !! 決済後の応答を破棄（socket destroy） { rid: '5ba858ff' }
+  [ 3632ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 3633ms] server      ← GET /report { rid: '9d1b88a5', purchaseId: undefined, paid: false }
+  [ 3633ms] server      → HTTP 402 { rid: '9d1b88a5', paymentResponse: false }
+  [ 3636ms] client      署名を作成 {
+  sig: 'b27cbb0ff05f',
+  nonce: '0x5cef82e6…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 3637ms] server      ← GET /report { rid: '50132867', purchaseId: undefined, paid: true }
+  [ 3638ms] server      同じ id で別の内容 → 409 { key: 'pay_7aa5b0e592c44021ac6a' }
+  [ 3638ms] server      → HTTP 409 { rid: '50132867', paymentResponse: false }
+  [ 3639ms] client      再試行: HTTP 409 { body: '{"error":"id reused for different request"}' }
+
+=== D2
+  [ 4267ms] server      ← GET /report { rid: 'b25a50f5', purchaseId: undefined, paid: false }
+  [ 4268ms] server      → HTTP 402 { rid: 'b25a50f5', paymentResponse: false }
+  [ 4270ms] client      署名を作成 {
+  sig: '32feb636acdf',
+  nonce: '0xdf90bd43…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 4271ms] server      ← GET /report { rid: 'f9ab6c59', purchaseId: undefined, paid: true }
+  [ 4281ms] facilitator verify { sig: '32feb636acdf', isValid: true, reason: undefined }
+  [ 4281ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 4295ms] facilitator settle tx を送信 { tx: '0x22cef5cc…' }
+  [ 4403ms] facilitator settle {
+  sig: '32feb636acdf',
+  success: true,
+  tx: '0x22cef5cc…',
+  reason: undefined,
+  message: undefined
+}
+  [ 4403ms] server      !! 決済後の応答を破棄（socket destroy） { rid: 'f9ab6c59' }
+  [ 4404ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 4405ms] server      ← GET /report { rid: '9194c452', purchaseId: undefined, paid: false }
+  [ 4406ms] server      → HTTP 402 { rid: '9194c452', paymentResponse: false }
+  [ 4407ms] client      署名を作成 {
+  sig: '22fc2d05ccc4',
+  nonce: '0xa5257431…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 4411ms] server      ← GET /report { rid: '21785d9c', purchaseId: undefined, paid: true }
+  [ 4411ms] server      同じ id で別の内容 → 409 { key: 'pay_189d4f2a86384260a863' }
+  [ 4411ms] server      → HTTP 409 { rid: '21785d9c', paymentResponse: false }
+  [ 4412ms] client      再試行: HTTP 409 { body: '{"error":"id reused for different request"}' }
+  [ 4530ms] seller      409 で断った署名を自分で実行 { status: 'success', validBefore: '1792089584' }
+
+=== E
+  [ 5316ms] server      ← GET /report { rid: '54e34377', purchaseId: undefined, paid: false }
+  [ 5317ms] server      → HTTP 402 { rid: '54e34377', paymentResponse: false }
+  [ 5321ms] client      署名を作成 {
+  sig: 'db62a31d2a46',
+  nonce: '0x89935f71…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 5322ms] server      ← GET /report { rid: '9e01515e', purchaseId: undefined, paid: true }
+  [ 5334ms] facilitator verify { sig: 'db62a31d2a46', isValid: true, reason: undefined }
+  [ 5334ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 5347ms] facilitator settle tx を送信 { tx: '0x1eb301ce…' }
+  [ 5403ms] facilitator settle {
+  sig: 'db62a31d2a46',
+  success: true,
+  tx: '0x1eb301ce…',
+  reason: undefined,
+  message: undefined
+}
+  [ 5404ms] server      !! 決済後の応答を破棄（socket destroy） { rid: '9e01515e' }
+  [ 5405ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 5406ms] server      ← GET /report { rid: '05e8ab5c', purchaseId: undefined, paid: false }
+  [ 5407ms] server      → HTTP 402 { rid: '05e8ab5c', paymentResponse: false }
+  [ 5410ms] client      署名を作成 {
+  sig: 'b53cc07eb996',
+  nonce: '0xb8106cc5…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 5412ms] server      ← GET /report { rid: 'f43b61a4', purchaseId: undefined, paid: true }
+  [ 5422ms] facilitator verify { sig: 'b53cc07eb996', isValid: true, reason: undefined }
+  [ 5422ms] server      handler 実行（=サービス提供） { n: 2 }
+  [ 5441ms] facilitator settle tx を送信 { tx: '0x7177bf91…' }
+  [ 5499ms] facilitator settle {
+  sig: 'b53cc07eb996',
+  success: true,
+  tx: '0x7177bf91…',
+  reason: undefined,
+  message: undefined
+}
+  [ 5499ms] server      → HTTP 200 { rid: 'f43b61a4', paymentResponse: true }
+  [ 5500ms] client      再試行: HTTP 200 { body: '{"report":"report #2","q":null}' }
+
+=== F
+  [ 6234ms] server      ← GET /report { rid: 'e23c3f64', purchaseId: 'order-42', paid: false }
+  [ 6234ms] server      → HTTP 402 { rid: 'e23c3f64', paymentResponse: false }
+  [ 6237ms] client      署名を作成 {
+  sig: '8011018393d9',
+  nonce: '0xf1e890f1…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 6238ms] server      ← GET /report { rid: '6c3b5db8', purchaseId: 'order-42', paid: true }
+  [ 6248ms] facilitator verify { sig: '8011018393d9', isValid: true, reason: undefined }
+  [ 6248ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 6261ms] facilitator settle tx を送信 { tx: '0xdc801979…' }
+  [ 6319ms] facilitator settle {
+  sig: '8011018393d9',
+  success: true,
+  tx: '0xdc801979…',
+  reason: undefined,
+  message: undefined
+}
+  [ 6320ms] server      !! 決済後の応答を破棄（socket destroy） { rid: '6c3b5db8' }
+  [ 6320ms] client      1回目: 通信断 { error: 'SocketError: other side closed' }
+  [ 6322ms] server      ← GET /report { rid: '63d6038d', purchaseId: 'order-42', paid: false }
+  [ 6322ms] server      購入済み：支払いを処理せず同じ結果を返す { key: '0x90F79bf6EB2c4f870365E7' }
+  [ 6322ms] server      → HTTP 200 { rid: '63d6038d', paymentResponse: false }
+  [ 6323ms] client      再試行: HTTP 200 { body: '{"report":"report #1","q":null}' }
+
+=== G
+  [ 7123ms] server      ← GET /report { rid: '7026d5ca', purchaseId: 'order-43', paid: false }
+  [ 7123ms] server      → HTTP 402 { rid: '7026d5ca', paymentResponse: false }
+  [ 7126ms] client      署名を作成 {
+  sig: 'e5821765dff0',
+  nonce: '0x36d57808…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 7126ms] server      ← GET /report { rid: 'e5b3a407', purchaseId: 'order-43', paid: false }
+  [ 7127ms] server      → HTTP 402 { rid: 'e5b3a407', paymentResponse: false }
+  [ 7129ms] client      署名を作成 {
+  sig: 'fb23b5506dcd',
+  nonce: '0xb1b44a85…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 7130ms] server      ← GET /report { rid: '71c66b09', purchaseId: 'order-43', paid: true }
+  [ 7131ms] server      ← GET /report { rid: '7877d606', purchaseId: 'order-43', paid: true }
+  [ 7146ms] facilitator verify { sig: 'fb23b5506dcd', isValid: true, reason: undefined }
+  [ 7148ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 7150ms] facilitator verify { sig: 'e5821765dff0', isValid: true, reason: undefined }
+  [ 7150ms] server      handler 実行（=サービス提供） { n: 2 }
+  [ 7182ms] facilitator settle tx を送信 { tx: '0xb9560b32…' }
+  [ 7183ms] facilitator settle tx を送信 { tx: '0xcb5e9f77…' }
+  [ 7244ms] facilitator settle {
+  sig: 'fb23b5506dcd',
+  success: true,
+  tx: '0xcb5e9f77…',
+  reason: undefined,
+  message: undefined
+}
+  [ 7244ms] server      → HTTP 200 { rid: '71c66b09', paymentResponse: true }
+  [ 7245ms] facilitator settle {
+  sig: 'e5821765dff0',
+  success: true,
+  tx: '0xb9560b32…',
+  reason: undefined,
+  message: undefined
+}
+  [ 7245ms] server      → HTTP 200 { rid: '7877d606', paymentResponse: true }
+  [ 7246ms] client      並行2: HTTP 200 { body: '{"report":"report #1","q":null}' }
+  [ 7247ms] client      並行1: HTTP 200 { body: '{"report":"report #2","q":null}' }
+
+=== H
+  [ 8088ms] server      ← GET /report { rid: '9e7f0dcf', purchaseId: 'order-44', paid: false }
+  [ 8088ms] server      → HTTP 402 { rid: '9e7f0dcf', paymentResponse: false }
+  [ 8091ms] client      署名を作成 {
+  sig: 'c12a0b1c1d2d',
+  nonce: '0x23a67604…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 8092ms] server      ← GET /report { rid: '3fd5e135', purchaseId: 'order-44', paid: false }
+  [ 8093ms] server      → HTTP 402 { rid: '3fd5e135', paymentResponse: false }
+  [ 8095ms] client      署名を作成 {
+  sig: '8c47c46553dc',
+  nonce: '0x792495ed…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 8097ms] server      ← GET /report { rid: '227ef7e2', purchaseId: 'order-44', paid: true }
+  [ 8099ms] server      ← GET /report { rid: '64418166', purchaseId: 'order-44', paid: true }
+  [ 8117ms] facilitator verify { sig: '8c47c46553dc', isValid: true, reason: undefined }
+  [ 8117ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 8119ms] facilitator verify { sig: 'c12a0b1c1d2d', isValid: true, reason: undefined }
+  [ 8119ms] server      handler 実行（=サービス提供） { n: 2 }
+  [ 8141ms] facilitator settle tx を送信 { tx: '0x242bd10f…' }
+  [ 8144ms] facilitator settle {
+  sig: 'c12a0b1c1d2d',
+  success: false,
+  tx: '',
+  reason: 'invalid_exact_evm_transaction_failed',
+  message: 'Details: replacement transaction underpriced'
+}
+  [ 8145ms] server      → HTTP 402 { rid: '64418166', paymentResponse: true }
+  [ 8147ms] client      並行1: HTTP 402 { body: '{}' }
+  [ 8202ms] facilitator settle {
+  sig: '8c47c46553dc',
+  success: true,
+  tx: '0x242bd10f…',
+  reason: undefined,
+  message: undefined
+}
+  [ 8202ms] server      → HTTP 200 { rid: '227ef7e2', paymentResponse: true }
+  [ 8203ms] client      並行2: HTTP 200 { body: '{"report":"report #1","q":null}' }
+
+=== I
+  [ 9124ms] server      ← GET /report { rid: '8922330f', purchaseId: 'order-45', paid: false }
+  [ 9125ms] server      → HTTP 402 { rid: '8922330f', paymentResponse: false }
+  [ 9128ms] client      署名を作成 {
+  sig: '7aeda298702e',
+  nonce: '0x5911395a…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 9129ms] server      ← GET /report { rid: 'dbf92206', purchaseId: 'order-45', paid: false }
+  [ 9130ms] server      → HTTP 402 { rid: 'dbf92206', paymentResponse: false }
+  [ 9132ms] client      署名を作成 {
+  sig: '92676b051908',
+  nonce: '0x11e7ec22…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 9134ms] server      ← GET /report { rid: 'dbc1b795', purchaseId: 'order-45', paid: true }
+  [ 9136ms] server      ← GET /report { rid: '091e90b9', purchaseId: 'order-45', paid: true }
+  [ 9136ms] server      同じ購入を処理中 → 409 { key: '0x90F79bf6EB2c4f870365E7' }
+  [ 9136ms] server      → HTTP 409 { rid: '091e90b9', paymentResponse: false }
+  [ 9140ms] client      並行1: HTTP 409 { body: '{"error":"purchase in progress"}' }
+  [ 9159ms] facilitator verify { sig: '92676b051908', isValid: true, reason: undefined }
+  [ 9159ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 9171ms] facilitator settle tx を送信 { tx: '0xb1b14be8…' }
+  [ 9227ms] facilitator settle {
+  sig: '92676b051908',
+  success: true,
+  tx: '0xb1b14be8…',
+  reason: undefined,
+  message: undefined
+}
+  [ 9228ms] server      → HTTP 200 { rid: 'dbc1b795', paymentResponse: true }
+  [ 9229ms] client      並行2: HTTP 200 { body: '{"report":"report #1","q":null}' }
+
+=== まとめ（A〜F は最初の決済後の応答を1回だけ破棄。G〜I は破棄なし）
+┌─────────┬──────┬──────────────────────┬────────────────────────────────────────────┬────────────────────────────┬──────────┬────────┐
+│ (index) │ case │ idempotency          │ retry                                      │ final                      │ payments │ served │
+├─────────┼──────┼──────────────────────┼────────────────────────────────────────────┼────────────────────────────┼──────────┼────────┤
+│ 0       │ 'A'  │ 'なし'               │ 'SDKで再リクエスト（新しい署名）'          │ '200'                      │ 2        │ 2      │
+│ 1       │ 'B'  │ 'なし'               │ '同じ署名を再送'                           │ '402'                      │ 1        │ 1      │
+│ 2       │ 'C'  │ 'payment-identifier' │ '同じ署名を再送'                           │ '200'                      │ 1        │ 1      │
+│ 3       │ 'D'  │ 'payment-identifier' │ '同じidでSDK再リクエスト（新しい署名）'    │ '409'                      │ 1        │ 1      │
+│ 4       │ 'D2' │ 'payment-identifier' │ 'Dのあと、409で断られた署名を売り手が実行' │ '409→売り手が実行:success' │ 2        │ 1      │
+│ 5       │ 'E'  │ 'payment-identifier' │ '再起動：新しいidと新しい署名'             │ '200'                      │ 2        │ 2      │
+│ 6       │ 'F'  │ 'purchase-id-naive'  │ '再起動：同じ購入IDでSDK再リクエスト'      │ '200'                      │ 1        │ 1      │
+│ 7       │ 'G'  │ 'purchase-id-naive'  │ '応答を待たずに同じ購入IDで並行送信'       │ '200/200'                  │ 2        │ 2      │
+│ 8       │ 'H'  │ 'purchase-id-naive'  │ 'Gと同じ／facilitatorにnonce管理なし'      │ '402/200'                  │ 1        │ 2      │
+│ 9       │ 'I'  │ 'purchase-id'        │ 'Gと同じ／購入IDを処理中に予約'            │ '409/200'                  │ 1        │ 1      │
+└─────────┴──────┴──────────────────────┴────────────────────────────────────────────┴────────────────────────────┴──────────┴────────┘

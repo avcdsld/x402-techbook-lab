@@ -1,0 +1,44 @@
+  [  899ms] chain       開始時 { block: 1113, ts: 1792089452, buyer: 10000000n, seller: 0n }
+  [  904ms] server      ← GET /report { rid: '78591e40', purchaseId: undefined, paid: false }
+  [  907ms] server      → HTTP 402 { rid: '78591e40', paymentResponse: false }
+  [  916ms] client      署名を作成 {
+  sig: 'c9650f8fa166',
+  nonce: '0xf99b5a9c…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [  917ms] server      ← GET /report { rid: 'c87314d7', purchaseId: undefined, paid: true }
+  [  933ms] facilitator verify { sig: 'c9650f8fa166', isValid: true, reason: undefined }
+  [  933ms] server      handler 実行（=サービス提供） { n: 1 }
+  [  950ms] facilitator settle tx を送信 { tx: '0x94677ff3…' }
+  [ 1065ms] facilitator settle {
+  sig: 'c9650f8fa166',
+  success: true,
+  tx: '0x94677ff3…',
+  reason: undefined,
+  message: undefined
+}
+  [ 1066ms] server      → HTTP 200 { rid: 'c87314d7', paymentResponse: true }
+  [ 1068ms] client      HTTP 200 {
+  body: { report: 'report #1', q: null },
+  receipt: {
+    success: true,
+    transaction: '0x94677ff35386d8d73c8daedd3d0d6cb0fc29c4532a0c75d5e28b420f5da3146d',
+    network: 'eip155:31337',
+    payer: '0x90F79bf6EB2c4f870365E785982E1f101E93b906'
+  }
+}
+  [ 1077ms] chain       終了時 {
+  block: 1114,
+  ts: 1792089452,
+  buyer: 9990000n,
+  seller: 10000n,
+  nonceUsed: true
+}
+  [ 1085ms] chain       tx の送信者はだれか {
+  from: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+  facilitator: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+  buyer: '0x90F79bf6EB2c4f870365E785982E1f101E93b906'
+}
+
+実験0 OK: 署名1回・送金1回・提供1回。ガス代は facilitator が払った

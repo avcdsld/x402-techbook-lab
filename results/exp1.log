@@ -1,0 +1,130 @@
+
+=== A. 1271・対照
+  [  935ms] server      ← GET /report { rid: 'ba4013cf', purchaseId: undefined, paid: false }
+  [  939ms] server      → HTTP 402 { rid: 'ba4013cf', paymentResponse: false }
+  [  953ms] client      署名を作成 {
+  sig: 'd9e5babf4316',
+  nonce: '0xb6b1b500…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [  955ms] server      ← GET /report { rid: '6d861f54', purchaseId: undefined, paid: true }
+  [  969ms] facilitator verify { sig: 'd9e5babf4316', isValid: true, reason: undefined }
+  [  970ms] server      handler 実行（=サービス提供） { n: 1 }
+  [  987ms] facilitator settle tx を送信 { tx: '0xa687f55f…' }
+  [ 1045ms] facilitator settle {
+  sig: 'd9e5babf4316',
+  success: true,
+  tx: '0xa687f55f…',
+  reason: undefined,
+  message: undefined
+}
+  [ 1047ms] server      → HTTP 200 { rid: '6d861f54', paymentResponse: true }
+  [ 1049ms] client      HTTP 200 { body: '{"report":"report #1","q":null}' }
+
+=== B. 1271・verify後にowner交代
+  [ 1714ms] server      ← GET /report { rid: '6e4673cb', purchaseId: undefined, paid: false }
+  [ 1715ms] server      → HTTP 402 { rid: '6e4673cb', paymentResponse: false }
+  [ 1717ms] client      署名を作成 {
+  sig: 'd7414ec8773f',
+  nonce: '0x0a066e77…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 1718ms] server      ← GET /report { rid: '46e8fc18', purchaseId: undefined, paid: true }
+  [ 1726ms] facilitator verify { sig: 'd7414ec8773f', isValid: true, reason: undefined }
+  [ 1726ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 1795ms] wallet      owner を交代した（鍵ローテーション） 
+  [ 1802ms] facilitator settle {
+  sig: 'd7414ec8773f',
+  success: false,
+  tx: '',
+  reason: 'invalid_exact_evm_signature',
+  message: undefined
+}
+  [ 1803ms] server      → HTTP 402 { rid: '46e8fc18', paymentResponse: true }
+  [ 1804ms] client      HTTP 402 { body: '{}' }
+
+=== C. EOA・verify後にcancelAuthorization
+  [ 2602ms] server      ← GET /report { rid: 'bfc3dd96', purchaseId: undefined, paid: false }
+  [ 2603ms] server      → HTTP 402 { rid: 'bfc3dd96', paymentResponse: false }
+  [ 2605ms] client      署名を作成 {
+  sig: '36c9fe9d28a9',
+  nonce: '0x6811b678…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 2606ms] server      ← GET /report { rid: '115c03a9', purchaseId: undefined, paid: true }
+  [ 2616ms] facilitator verify { sig: '36c9fe9d28a9', isValid: true, reason: undefined }
+  [ 2616ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 2682ms] buyer       cancelAuthorization を送った（nonce を消費） 
+  [ 2701ms] facilitator settle {
+  sig: '36c9fe9d28a9',
+  success: false,
+  tx: '',
+  reason: 'invalid_exact_evm_nonce_already_used',
+  message: 'The contract function "transferWithAuthorization" reverted with the following reason:'
+}
+  [ 2701ms] server      → HTTP 402 { rid: '115c03a9', paymentResponse: true }
+  [ 2702ms] client      HTTP 402 { body: '{}' }
+
+=== D. 1271・settle tx送信後に、より高いチップでowner交代
+  [ 3413ms] server      ← GET /report { rid: '8a2cb6fa', purchaseId: undefined, paid: false }
+  [ 3413ms] server      → HTTP 402 { rid: '8a2cb6fa', paymentResponse: false }
+  [ 3416ms] client      署名を作成 {
+  sig: 'db8b6a2676e0',
+  nonce: '0xbc29892b…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 3418ms] server      ← GET /report { rid: 'cd64c9d7', purchaseId: undefined, paid: true }
+  [ 3427ms] facilitator verify { sig: 'db8b6a2676e0', isValid: true, reason: undefined }
+  [ 3427ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 3440ms] facilitator settle tx を送信 { tx: '0x699f2e04…' }
+  [ 3445ms] wallet      より高いチップで owner 交代 tx を投入 
+  [ 3566ms] chain       1ブロック採掘 { order: [ '0x15d3… nonce11', '0x7099… nonce102' ] }
+  [ 3568ms] facilitator settle {
+  sig: 'db8b6a2676e0',
+  success: false,
+  tx: '0x699f2e04…',
+  reason: 'invalid_exact_evm_transaction_failed',
+  message: undefined
+}
+  [ 3569ms] server      → HTTP 402 { rid: 'cd64c9d7', paymentResponse: true }
+  [ 3570ms] client      HTTP 402 { body: '{}' }
+
+=== E. EOA・settle tx送信後に、より高いチップでcancelAuthorization
+  [ 4422ms] server      ← GET /report { rid: '4cba7e1d', purchaseId: undefined, paid: false }
+  [ 4424ms] server      → HTTP 402 { rid: '4cba7e1d', paymentResponse: false }
+  [ 4427ms] client      署名を作成 {
+  sig: '669269836fba',
+  nonce: '0xe810e5c8…',
+  value: '10000',
+  to: '0x3C44CdDd…'
+}
+  [ 4429ms] server      ← GET /report { rid: 'fea397a9', purchaseId: undefined, paid: true }
+  [ 4445ms] facilitator verify { sig: '669269836fba', isValid: true, reason: undefined }
+  [ 4446ms] server      handler 実行（=サービス提供） { n: 1 }
+  [ 4461ms] facilitator settle tx を送信 { tx: '0x506544ad…' }
+  [ 4467ms] buyer       より高いチップで cancelAuthorization を投入 
+  [ 4532ms] chain       1ブロック採掘 { order: [ '0x90f7… nonce7', '0x7099… nonce103' ] }
+  [ 4534ms] facilitator settle {
+  sig: '669269836fba',
+  success: false,
+  tx: '0x506544ad…',
+  reason: 'invalid_exact_evm_transaction_failed',
+  message: undefined
+}
+  [ 4534ms] server      → HTTP 402 { rid: 'fea397a9', paymentResponse: true }
+  [ 4535ms] client      HTTP 402 { body: '{}' }
+
+=== まとめ
+┌─────────┬──────────────────────────────────────────────────────────────────┬──────┬────────┬─────────┬───────────┬───────────────────┬────────────────┐
+│ (index) │ case                                                             │ http │ served │ paid    │ nonceUsed │ facilitatorGasWei │ facilitatorTxs │
+├─────────┼──────────────────────────────────────────────────────────────────┼──────┼────────┼─────────┼───────────┼───────────────────┼────────────────┤
+│ 0       │ 'A. 1271・対照'                                                  │ 200  │ 1      │ '10000' │ true      │ '100551000804408' │ 1              │
+│ 1       │ 'B. 1271・verify後にowner交代'                                   │ 402  │ 1      │ '0'     │ false     │ '0'               │ 0              │
+│ 2       │ 'C. EOA・verify後にcancelAuthorization'                          │ 402  │ 1      │ '0'     │ true      │ '0'               │ 0              │
+│ 3       │ 'D. 1271・settle tx送信後に、より高いチップでowner交代'          │ 402  │ 1      │ '0'     │ false     │ '52219000417752'  │ 1              │
+│ 4       │ 'E. EOA・settle tx送信後に、より高いチップでcancelAuthorization' │ 402  │ 1      │ '0'     │ true      │ '33688000269504'  │ 1              │
+└─────────┴──────────────────────────────────────────────────────────────────┴──────┴────────┴─────────┴───────────┴───────────────────┴────────────────┘
