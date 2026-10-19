@@ -140,6 +140,10 @@ A〜F：最初の決済の直後に応答を1回だけ破棄。G〜I：破棄な
 - `simulateInSettle: true` にした場合、facilitator の signer がガス量を明示した場合の挙動（実験1Cの「ガス見積りが防いだ」部分が変わるはず。未検証）。
 - `receiveWithAuthorization` との比較（企画メモ §7）。
 - 既存決済 API（Stripe の idempotency key 等）との具体比較。
+- upfront フロー（settle を先に行う方式）。
+- `authorizationState` による支払いの確認（再試行前に署名が使われたかどうかを確かめる買い手）。
+- Sign-In-With-X 拡張（ウォレットアドレスで買い手を識別し、購入済みリソースに再課金しない）。
+- batch-settlement など exact 以外の方式。
 
 ## セットアップ（クローン後）
 
